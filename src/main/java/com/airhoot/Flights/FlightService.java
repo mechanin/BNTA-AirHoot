@@ -40,8 +40,4 @@ return true;
         return true;
     };
 
-    public static void bookFlight{
-
-    }
-
 }
