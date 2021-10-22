@@ -6,10 +6,10 @@ public class Person {
     private String name;
     private String email;
     private int phoneNumber;
-    private int idNumber;
+    private String idNumber;
     private int passportNumber;
 
-    public Person(String name, String email, int phoneNumber, int idNumber, int passportNumber) {
+    public Person(String name, String email, int phoneNumber, String idNumber, int passportNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -41,11 +41,11 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getIdNumber() {
+    public String getIdNumber() {
         return idNumber;
     }
 
-    public void setIdNumber(int idNumber) {
+    public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
     }
 

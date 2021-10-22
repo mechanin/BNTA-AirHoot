@@ -39,8 +39,4 @@ public class FlightService {
 
     };
 
-    public static void bookFlight{
-
-    }
-
 }
