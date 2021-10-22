@@ -24,6 +24,7 @@ public static void main(String[] args) {
         System.out.println("(1)BOOK A FLIGHT");
         System.out.println("(2)EDIT/CANCEL A BOOKING");
         int bookingSelection = sc.nextInt();
+
     }
 
 //     if mainSelection is not 1 or 2 prompt a proper input

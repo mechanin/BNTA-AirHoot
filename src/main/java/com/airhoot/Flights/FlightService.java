@@ -1,4 +1,4 @@
-
+package com.airhoot.Flights;
 
 import com.airhoot.Flights.Flight;
 import com.airhoot.Flights.Status;
@@ -39,5 +39,9 @@ return true;
     public static boolean cancelFlight(){
         return true;
     };
+
+    public static void bookFlight{
+
+    }
 
 }
