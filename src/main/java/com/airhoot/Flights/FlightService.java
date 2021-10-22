@@ -1,4 +1,4 @@
-
+package com.airhoot.Flights;
 
 import com.airhoot.Flights.Flight;
 import com.airhoot.Flights.Status;
@@ -7,7 +7,6 @@ import com.airhoot.person.Person;
 import java.util.Arrays;
 
 public class FlightService {
-    //Flight flight  = new Flight("Paris", "London", 2021-11-06, 180, 200, 150, 0, Status.ON_TIME);
     public static boolean addPassenger(Person person, Flight flight){
         if (flight.getCapacity() > flight.getCount() +1){
             flight.setPassengers(person, flight.getCount());
