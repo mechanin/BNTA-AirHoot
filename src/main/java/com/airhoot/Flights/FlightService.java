@@ -1,4 +1,4 @@
-package com.airhoot.Flights;
+
 
 import com.airhoot.Flights.Flight;
 import com.airhoot.Flights.Status;
@@ -27,16 +27,17 @@ public class FlightService {
         }
     };
 
-    public static boolean changeStatus{
-
+    public static boolean changeStatus(Flight flightToChange, Status newStatus){
+        flightToChange.setStatus(newStatus);
+        return true;
     };
 
     public static boolean addFlightToList(){
-
+return true;
     };
 
     public static boolean cancelFlight(){
-
+        return true;
     };
 
 }
