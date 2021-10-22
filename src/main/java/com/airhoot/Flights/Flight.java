@@ -1,3 +1,5 @@
+package com.airhoot.Flights;
+
 import java.time.LocalDateTime ;
 
 public class Flight {
