@@ -20,8 +20,8 @@ public class FlightService {
         if()
     };
 
-    public static boolean changeStatus{
-
+    public static boolean changeStatus(Flight flightToChange, Status newStatus){
+        flightToChange.status = newStatus;
     };
 
     public static boolean addFlightToList(){
