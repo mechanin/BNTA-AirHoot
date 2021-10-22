@@ -1,8 +1,12 @@
 package com.airhoot.Flights;
 
-public class FlightService {
-    public static boolean addPassenger(){
+import com.airhoot.person.Person;
 
+public class FlightService {
+    public static boolean addPassenger(Person person, Flight flight){
+        if (flight.getCapacity() > flight.getCount() +1){
+            flight.passengers[]
+        }
     };
 
     public static boolean removePassenger(){

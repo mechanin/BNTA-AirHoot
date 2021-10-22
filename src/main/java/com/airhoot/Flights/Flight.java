@@ -6,6 +6,7 @@ public class Flight {
     private String destination;
     private String origin;
     private LocalDateTime departuredate;
+    private Object[] passengers;
     private int duration;
     private int price;
     private int capacity;
