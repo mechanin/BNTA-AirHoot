@@ -1,4 +1,4 @@
-package com.airhoot;
+package com.airhoot.person;
 
 import java.util.Objects;
 
