@@ -1,5 +1,7 @@
 package com.airhoot.Flights;
 
+import com.airhoot.person.Person;
+
 import java.time.LocalDateTime ;
 
 public class Flight {
@@ -14,7 +16,7 @@ public class Flight {
     private Status status;
 
 
-    public Flight(String destination, String origin, LocalDateTime departuredate, Object[] passengers, int duration, int price, int capacity, int count, Status status) {
+    public Flight(String destination, String origin, LocalDateTime departuredate, int duration, int price, int capacity, int count, Status status) {
         this.destination = destination;
         this.origin = origin;
         this.departuredate = departuredate;
@@ -23,15 +25,15 @@ public class Flight {
         this.capacity = capacity;
         this.count = count;
         this.status = status;
-        this.passengers = passengers;
+        this.passengers = new Object[capacity];
     }
 
     public Object[] getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(Object[] passengers) {
-        this.passengers = passengers;
+    public void setPassengers(Person person, int index) {
+        this.passengers[index] = person;
     }
 
     public void setDestination(String destination) {
