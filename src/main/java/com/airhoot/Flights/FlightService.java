@@ -17,19 +17,19 @@ public class FlightService {
 
     public static boolean removePassenger(Person person, Flight flight){
         Object[] currentPassengers = flight.getPassengers();
-        if()
     };
 
     public static boolean changeStatus(Flight flightToChange, Status newStatus){
-        flightToChange.status = newStatus;
+        flightToChange.setStatus(newStatus);
+        return true;
     };
 
     public static boolean addFlightToList(){
-
+return true;
     };
 
     public static boolean cancelFlight(){
-
+        return true;
     };
 
 }
