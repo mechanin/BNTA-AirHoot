@@ -1,10 +1,16 @@
 package com.airhoot;
 
+import com.airhoot.Flights.Flight;
+import com.airhoot.Flights.FlightsList;
+
 import java.util.Scanner;
+
+import static com.airhoot.person.BookingService.createNewPassenger;
 
 public class Main {
 //    ADMIN or BOOKING
 public static void main(String[] args) {
+
     System.out.println("Function to Access?: ");
     System.out.println("(1)ADMIN");
     System.out.println("(2)BOOKING");
@@ -24,6 +30,10 @@ public static void main(String[] args) {
         System.out.println("(1)BOOK A FLIGHT");
         System.out.println("(2)EDIT/CANCEL A BOOKING");
         int bookingSelection = sc.nextInt();
+        if(selection == 1){
+            createNewPassenger();
+
+        }
 
     }
 
