@@ -6,9 +6,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime ;
 
 public class Flight {
-    private String destination;
-    private String origin;
-    private LocalDateTime departureDate;
+    private Airport destination;
+    private Airport origin;
+    private LocalDate departuredate;
     private Object[] passengers;
     private int duration;
     private int price;
@@ -17,13 +17,14 @@ public class Flight {
     private Status status;
 
 
-    public Flight(String destination, String origin, LocalDateTime departureDate, int duration, int price, int capacity, Status status) {
+    public Flight(Airport destination, Airport origin, LocalDate departuredate, int duration, int price, int capacity, int count, Status status) {
         this.destination = destination;
         this.origin = origin;
-        this.departureDate = departureDate;
+        this.departuredate = departuredate;
         this.duration = duration;
         this.price = price;
         this.capacity = capacity;
+        this.count = count;
         this.status = status;
         this.passengers = new Object[capacity];
     }
@@ -36,16 +37,16 @@ public class Flight {
         this.passengers[index] = person;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Airport destination) {
         this.destination = destination;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(Airport origin) {
         this.origin = origin;
     }
 
-    public void setDepartureDate(LocalDateTime departureDate) {
-        this.departureDate = departureDate;
+    public void setDeparturedate(LocalDate departuredate) {
+        this.departuredate = departuredate;
     }
 
     public void setDuration(int duration) {
@@ -68,16 +69,16 @@ public class Flight {
         this.status = status;
     }
 
-    public String getDestination() {
+    public Airport getDestination() {
         return destination;
     }
 
-    public String getOrigin() {
+    public Airport getOrigin() {
         return origin;
     }
 
-    public LocalDateTime getDepartureDate() {
-        return departureDate;
+    public LocalDate getDeparturedate() {
+        return departuredate;
     }
 
     public int getDuration() {
