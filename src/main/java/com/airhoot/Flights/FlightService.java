@@ -1,69 +1,26 @@
 package com.airhoot.Flights;
 
+import com.airhoot.Flights.Flight;
+import com.airhoot.Flights.Status;
 import com.airhoot.person.Person;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 public class FlightService {
-
-    public static void addFlight() {
-        System.out.println("Enter destination ");
-        Scanner sc = new Scanner(System.in);
-        String destination = sc.nextLine();
-
-        System.out.println("Enter origin ");
-        String origin = sc.nextLine();
-
-        System.out.println("Enter departure date M/d/yyyy/hh/mm ");
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yyyy/hh/mm");
-        String userInput = sc.nextLine();
-        LocalDateTime departureDate = LocalDateTime.parse(userInput, dateFormat);
-
-        System.out.println("Enter duration (minutes) ");
-        int duration = sc.nextInt();
-
-        System.out.println("Enter price (gbp) ");
-        int price = sc.nextInt();
-
-        System.out.println("Enter capacity (gbp) ");
-        int capacity = sc.nextInt();
-        
-        System.out.println("Enter status ");
-        String statusString = sc.nextLine();
-        
-        Status status;
-
-        switch (statusString) {
-            case "ON_TIME":
-                status = Status.ON_TIME;
-                break;
-            case "DELAYED":
-                status = Status.DELAYED;
-                break;
-            case "CANCELLED":
-                status = Status.CANCELLED;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + statusString);
-        };
-
-        Flight flight = new Flight(destination,origin,departureDate,duration,price, capacity, status);
-        System.out.println("new flight created");
-    }
-
-    //Flight flight  = new Flight("Paris", "London", 2021-11-06, 180, 200, 150, 0, Status.ON_TIME);
     public static boolean addPassenger(Person person, Flight flight){
-        if (flight.getCapacity() > flight.getCount() +1){
+        int count = flight.getCount();
+        if (flight.getCapacity() > count +1){
             flight.setPassengers(person, flight.getCount());
+            count += 1;
             return true;
         }else{
             return false;
         }
-    };
+    }
 
     public static boolean removePassenger(Person person, Flight flight){
         Object[] currentPassengers = flight.getPassengers();
@@ -74,12 +31,13 @@ public class FlightService {
         }else{
             return false;
         }
-    };
+    }
 
     public static boolean changeStatus(Flight flightToChange, Status newStatus){
         flightToChange.setStatus(newStatus);
         return true;
     };
+
 
     public static boolean addFlightToList(){
 return true;
@@ -87,6 +45,40 @@ return true;
 
     public static boolean cancelFlight(){
         return true;
+    };
+
+    public static LocalDate getRandomDate() {
+        LocalDate start = LocalDate.now();
+        long weeks = ChronoUnit.WEEKS.between(start, start.plusYears(1));
+        LocalDate randomDate = start.plusWeeks(new Random().nextInt((int) weeks + 1));
+        return randomDate;
+    }
+
+    public static FlightsList createFlightsList(){
+        List<Flight> flights = new ArrayList<>();
+        FlightsList flightsList = new FlightsList(flights);
+        final List<Airport> AIRPORTS =
+                List.of(Airport.values());
+        final int SIZE = AIRPORTS.size();
+        Random rand = new Random();
+        for(int i = 0; i < 7; i++){
+            Airport destination = AIRPORTS.get(rand.nextInt(SIZE));
+            Airport origin = AIRPORTS.get(rand.nextInt(SIZE));
+            do {
+                if (destination.equals(origin)) {
+                    origin = AIRPORTS.get(rand.nextInt(SIZE));
+                } else {
+                    break;
+                }
+            } while (true);
+            LocalDate departuredate = getRandomDate();
+            int capacity = rand.nextInt(200) + 200;
+            Object[] passengers = new Object[capacity];
+            int duration = rand.nextInt(600) + 45;
+            int price = rand.nextInt(800) + 50;
+            int count = 0;
+            Status status = Status.ON_TIME;
+        }
     };
 
 }
