@@ -68,7 +68,20 @@ public class Main {
                             int propertyToEdit = sc.nextInt();
                             FlightService.editFlight(propertyToEdit,flightToEdit);
                             continue;
-
+                        case 3:
+//                            Prompt user to select flight to edit
+                            System.out.println("Select flight to cancel: ");
+//                    Initialize optionCount integer. This allows me to generate an option selection number next to each flight
+//                    Option count will increment upwards until it reaches flight list size
+//                    and display next to each flight
+                            optionCount = 0;
+                            for (Flight flightOfList : flightlist.getFlights()) {
+                                System.out.println("(" + optionCount + ")" + flightOfList.toString());
+                                optionCount++;
+                                continue;
+                            }
+                            flightToEdit = flightlist.getFlights().get(sc.nextInt());
+                            FlightService.cancelFlight(flightToEdit);
                     }
 //                    System.out.println(flightlist.getFlights().toString());
                     continue;

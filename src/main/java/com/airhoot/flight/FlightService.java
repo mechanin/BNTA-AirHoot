@@ -184,6 +184,20 @@ public class FlightService {
         }
     }
 
+    public static void cancelFlight(Flight flightToEdit) {
+        boolean newStatus = false;
+        while (newStatus == false) {
+            try {
+                flightToEdit.setStatus(Status.CANCELLED);
+                newStatus = true;
+                System.out.println("Success");
+                continue;
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR CANCELLING FLIGHT");
+            }
+        }
+    }
+
 
 
     /*public static FlightsList createFlightsList() {
