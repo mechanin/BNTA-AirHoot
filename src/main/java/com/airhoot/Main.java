@@ -2,6 +2,7 @@ package com.airhoot;
 
 import com.airhoot.flight.*;
 import com.airhoot.person.EmailValidator;
+import com.airhoot.person.NameChecker;
 import com.airhoot.person.PersonService;
 import com.airhoot.person.Person;
 
@@ -9,6 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import static com.airhoot.BookingService.createBooking;
+import static com.airhoot.BookingService.editBooking;
 import static com.airhoot.flight.FlightService.createFlightsList;
 
 public class Main {
@@ -110,7 +113,9 @@ public class Main {
                                 break;
                             }
                             continue;
+
                     }
+//                    System.out.println(flightlist.getFlights().toString());
                     continue;
 
 
@@ -126,7 +131,10 @@ public class Main {
     //                    Create a new passenger
                             Person passenger = PersonService.createNewPassenger();
     //                    Display all flights
-                            System.out.println("Which flight would you like to book?");
+                            createBooking(flightlist, passenger);
+                            break;
+                        case 2:
+                            System.out.println("On which flight is the booking?");
                             int optionCount = 0;
                             for (Flight flightOfList : flightlist.getFlights()) {
                                 if(flightOfList.getStatus() == Status.CANCELLED){
@@ -137,47 +145,34 @@ public class Main {
                                     continue;
                                 }
                             }
-                            Flight flightToEdit;
-                            do {
-                                flightToEdit = flightlist.getFlights().get(sc.nextInt());
-                                if(flightToEdit.getCount() + 1 > flightToEdit.getCapacity()){
-                                    System.out.println("ERROR: Flight at full capacity. Would you like to select a different flight?");
-                                    System.out.println("(1) Select a new flight");
-                                    System.out.println("(2) Terminate booking");
-                                    int continueBooking = sc.nextInt();
-                                    switch (continueBooking){
-                                        case 1:
-                                            continue;
-                                        case 2:
-                                            break;
-                                    }
-
-                                }else{
-                                    flightToEdit.setPassengers(passenger, flightToEdit.getCount());
-                                    flightToEdit.setCount(flightToEdit.getCount() + 1);
-                                    System.out.println("Booking successful");
-                                    break;
-                                }
-                            }while(true);
-                            break;
-                        case 2:
-                            System.out.println("On which flight is the booking?");
-                            optionCount = 0;
-                            for (Flight flightOfList : flightlist.getFlights()) {
-                                if(flightOfList.getStatus() == Status.CANCELLED){
-                                    continue;
-                                }else {
-                                    System.out.println("(" + optionCount + ")" + flightOfList.toString());
-                                    optionCount++;
-                                    continue;
-                                }
-                            }
-                            flightToEdit = flightlist.getFlights().get(sc.nextInt());
+                            Flight flightToEdit = flightlist.getFlights().get(sc.nextInt());
                             System.out.println("Which booking on this flight do you wish to edit/cancel?");
                             Person[] passengers = flightToEdit.getPassengers();
-                            for(Person person : passengers){
-                                System.out.println(person.getName() + person.getIdNumber());
+                            optionCount = 0;
+                            for(int i = 0; i < flightToEdit.getCount(); i++){
+                                System.out.println("(" + optionCount + ")" + "PASSENGER NAME: " + passengers[i].getName() + " PASSENGER ID: " + passengers[i].getIdNumber());
+                                optionCount++;
                             }
+                            Person passengerToEdit = passengers[sc.nextInt()];
+                            System.out.println(passengerToEdit.toString());
+                        do {
+                            System.out.println("What details of this passenger would you like to edit?");
+                            System.out.println("(1)NAME");
+                            System.out.println("(2)EMAIL ADDRESS");
+                            System.out.println("(3)PHONE NUMBER");
+                            System.out.println("(4)PASSPORT NUMBER");
+                            editBooking(passengerToEdit);
+                            System.out.println("Would you like to edit other details of this booking?");
+                            System.out.println("(1) Choose another detail to edit");
+                            System.out.println("(2) Conclude editing");
+                            int continueEditing = sc.nextInt();
+                            switch (continueEditing) {
+                                case 1:
+                                    continue;
+                                case 2:
+                                    break;
+                            }
+                        }while(true);
 
 
                     }
