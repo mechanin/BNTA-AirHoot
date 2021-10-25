@@ -1,8 +1,8 @@
 package com.airhoot;
 
 import com.airhoot.flight.*;
-import com.airhoot.person.BookingService;
 import com.airhoot.person.Person;
+import com.airhoot.person.PersonService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class Main {
                         case 1:
     //                    If input is 1 book a flight
     //                    Create a new passenger
-                            Person passenger = BookingService.createNewPassenger();
+                            Person passenger = PersonService.createNewPassenger();
     //                    Display all flights
                     }
                 default:

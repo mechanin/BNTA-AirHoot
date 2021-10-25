@@ -3,7 +3,7 @@ package com.airhoot.person;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
-public class BookingService {
+public class PersonService {
     private static long idCounter = 0;
 
     public static synchronized String createID()
@@ -19,11 +19,11 @@ public class BookingService {
         do {
             String possibleName = inputPassengerInfo.nextLine();
             NameChecker nameChecker = new NameChecker();
-            if (nameChecker.validate(name) == false) {
-                System.out.println("Please enter a valid name");
-            }else{
+            if (nameChecker.validate(possibleName)) {
                 name = possibleName;
                 break;
+            }else{
+                System.out.println("Please enter a valid name");
             }
         }while(true);
 
@@ -40,9 +40,9 @@ public class BookingService {
             }
         }while(true);
         System.out.println("What is the phone number of the passenger? ( 12 digits with country code, no + or 0)");
-        int phoneNumber = 0;
+        long phoneNumber = 0;
         do{
-            int possiblePhoneNumber = inputPassengerInfo.nextInt();
+            long possiblePhoneNumber = inputPassengerInfo.nextLong();
             if(String.valueOf(possiblePhoneNumber).length() != 12){
                 System.out.println("Please enter valid phone number");
             }
@@ -53,7 +53,8 @@ public class BookingService {
         }while(true);
 
         System.out.println("What is the passport number of the passenger");
-        int passportNumber = inputPassengerInfo.nextInt();
+        Scanner sc1 = new Scanner(System.in);
+        String passportNumber = sc1.nextLine();
         String idNumber = createID();
 
         Person person = new Person(name, email, phoneNumber, idNumber, passportNumber);

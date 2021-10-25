@@ -5,11 +5,11 @@ import java.util.Objects;
 public class Person {
     private String name;
     private String email;
-    private int phoneNumber;
+    private long phoneNumber;
     private String idNumber;
-    private int passportNumber;
+    private String passportNumber;
 
-    public Person(String name, String email, int phoneNumber, String idNumber, int passportNumber) {
+    public Person(String name, String email, long phoneNumber, String idNumber, String passportNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -33,11 +33,11 @@ public class Person {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -49,11 +49,11 @@ public class Person {
         this.idNumber = idNumber;
     }
 
-    public int getPassportNumber() {
+    public String getPassportNumber() {
         return passportNumber;
     }
 
-    public void setPassportNumber(int passportNumber) {
+    public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
     }
 
