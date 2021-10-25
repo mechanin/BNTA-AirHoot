@@ -28,7 +28,7 @@ public class Flight {
         this.passengers = new Person[capacity];
     }
 
-    public Object[] getPassengers() {
+    public Person[] getPassengers() {
         return passengers;
     }
 

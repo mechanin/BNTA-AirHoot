@@ -122,9 +122,13 @@ public class Main {
                             System.out.println("Which flight would you like to book?");
                             int optionCount = 0;
                             for (Flight flightOfList : flightlist.getFlights()) {
-                                System.out.println("(" + optionCount + ")" + flightOfList.toString());
-                                optionCount++;
-                                continue;
+                                if(flightOfList.getStatus() == Status.CANCELLED){
+                                    continue;
+                                }else {
+                                    System.out.println("(" + optionCount + ")" + flightOfList.toString());
+                                    optionCount++;
+                                    continue;
+                                }
                             }
                             Flight flightToEdit;
                             do {
@@ -148,9 +152,29 @@ public class Main {
                                     break;
                                 }
                             }while(true);
+                            break;
+                        case 2:
+                            System.out.println("On which flight is the booking?");
+                            optionCount = 0;
+                            for (Flight flightOfList : flightlist.getFlights()) {
+                                if(flightOfList.getStatus() == Status.CANCELLED){
+                                    continue;
+                                }else {
+                                    System.out.println("(" + optionCount + ")" + flightOfList.toString());
+                                    optionCount++;
+                                    continue;
+                                }
+                            }
+                            flightToEdit = flightlist.getFlights().get(sc.nextInt());
+                            System.out.println("Which booking on this flight do you wish to edit/cancel?");
+                            Person[] passengers = flightToEdit.getPassengers();
+                            for(Person person : passengers){
+                                System.out.println(person.getName() + person.getIdNumber());
+                            }
 
 
                     }
+                    continue;
                 default:
                     //     if mainSelection is not 1 or 2 prompt a proper input
                     System.out.println("Please input an integer between 1 and 2: ");
