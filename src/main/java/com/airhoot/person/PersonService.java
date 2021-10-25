@@ -14,7 +14,7 @@ public class PersonService {
     public static Person createNewPassenger(){
         Scanner inputPassengerInfo = new Scanner(System.in);
         System.out.println("Creating a new booking");
-        System.out.println("What is the name of the passenger?");
+        System.out.println("What is the name of the passenger? (first name and last name)");
         String name = new String();
         do {
             String possibleName = inputPassengerInfo.nextLine();
