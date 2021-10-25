@@ -8,8 +8,8 @@ import java.time.LocalDateTime ;
 public class Flight {
     private Airport destination;
     private Airport origin;
-    private LocalDate departuredate;
-    private Object[] passengers;
+    private LocalDate departureDate;
+    private Person[] passengers;
     private int duration;
     private int price;
     private int capacity;
@@ -17,16 +17,16 @@ public class Flight {
     private Status status;
 
 
-    public Flight(Airport destination, Airport origin, LocalDate departuredate, int duration, int price, int capacity, int count, Status status) {
+    public Flight(Airport destination, Airport origin, LocalDate departureDate, int duration, int price, int capacity, int count, Status status) {
         this.destination = destination;
         this.origin = origin;
-        this.departuredate = departuredate;
+        this.departureDate = departureDate;
         this.duration = duration;
         this.price = price;
         this.capacity = capacity;
         this.count = count;
         this.status = status;
-        this.passengers = new Object[capacity];
+        this.passengers = new Person[capacity];
     }
 
     public Object[] getPassengers() {
@@ -45,8 +45,8 @@ public class Flight {
         this.origin = origin;
     }
 
-    public void setDeparturedate(LocalDate departuredate) {
-        this.departuredate = departuredate;
+    public void setDepartureDate(LocalDate departureDate) {
+        this.departureDate = departureDate;
     }
 
     public void setDuration(int duration) {
@@ -77,8 +77,8 @@ public class Flight {
         return origin;
     }
 
-    public LocalDate getDeparturedate() {
-        return departuredate;
+    public LocalDate getDepartureDate() {
+        return departureDate;
     }
 
     public int getDuration() {
@@ -113,7 +113,7 @@ public class Flight {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "DEPARTING FROM " + getOrigin().toString() + " TO " + getDestination().toString() +" ON " + getDepartureDate().toString();
     }
 }
 

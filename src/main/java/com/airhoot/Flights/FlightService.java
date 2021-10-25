@@ -7,6 +7,7 @@ import com.airhoot.person.Person;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -33,17 +34,37 @@ public class FlightService {
         }
     }
 
-    public static boolean changeStatus{
-
+    public static boolean changeStatus(Flight flightToChange, Status newStatus){
+        flightToChange.setStatus(newStatus);
+        return true;
     };
 
 
-    public static boolean addFlightToList(){
+    public static Flight createNewFlight(){
+//        Prompt user to input flight details
+        System.out.println("Input destination: ");
+        Scanner sc = new Scanner(System.in);
+        Airport destination = Airport.valueOf(sc.nextLine().toUpperCase());
+        System.out.println("Input origin: ");
+        Airport origin = Airport.valueOf(sc.nextLine().toUpperCase());
+        System.out.println("Input departure date M/d/yyyy: ");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yyyy");
+        LocalDate departureDate = LocalDate.parse(sc.nextLine(), dateFormat);
+        System.out.println("Input duration min: ");
+        int duration = sc.nextInt();
+        System.out.println("Input price £ ");
+        int price = sc.nextInt();
+        System.out.println("Input capacity ");
+        int capacity = sc.nextInt();
+//        Pass flight detail variables into a new flight object, set count to 0 and status to ON_TIME
+        Flight flight = new Flight(destination, origin, departureDate, duration, price, capacity, 0, Status.ON_TIME);
 
+
+        return flight;
     };
 
     public static boolean cancelFlight(){
-
+        return true;
     };
 
     public static LocalDate getRandomDate() {
@@ -53,7 +74,9 @@ public class FlightService {
         return randomDate;
     }
 
-    public static FlightsList createFlightsList(){
+
+
+    /*public static FlightsList createFlightsList() {
         List<Flight> flights = new ArrayList<>();
         FlightsList flightsList = new FlightsList(flights);
         final List<Airport> AIRPORTS =
@@ -78,6 +101,6 @@ public class FlightService {
             int count = 0;
             Status status = Status.ON_TIME;
         }
-    };
+    }*/
 
 }

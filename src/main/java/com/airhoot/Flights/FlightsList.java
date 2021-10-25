@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlightsList {
-    private List<Flight> flights;
+    private ArrayList<Flight> flights;
 
-    public FlightsList(List<Flight> flights) {
+    public FlightsList(ArrayList<Flight> flights) {
         this.flights = flights;
     }
 
-    public List<Flight> getFlights() {
+
+    public boolean addFlight(Flight flight) {
+        flights.add(flight);
+        return true;
+    }
+
+    public ArrayList<Flight> getFlights() {
         return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
     }
 
     @Override
