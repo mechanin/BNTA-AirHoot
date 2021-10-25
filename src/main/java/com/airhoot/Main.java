@@ -1,6 +1,8 @@
 package com.airhoot;
 
 import com.airhoot.flight.*;
+import com.airhoot.person.EmailValidator;
+import com.airhoot.person.NameChecker;
 import com.airhoot.person.PersonService;
 import com.airhoot.person.Person;
 
@@ -8,6 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import static com.airhoot.BookingService.createBooking;
+import static com.airhoot.BookingService.editBooking;
 import static com.airhoot.flight.FlightService.createFlightsList;
 
 public class Main {
@@ -29,6 +33,7 @@ public class Main {
                     System.out.println("(1)CREATE NEW FLIGHT");
                     System.out.println("(2)EDIT EXISTING FLIGHT");
                     System.out.println("(3)CANCEL EXISTING");
+                    System.out.println("(4)SEARCH FLIGHTS BY PASSENGER EMAIL");
                     int adminSelection = sc.nextInt();
                     switch (adminSelection) {
                         case 1:
@@ -65,41 +70,48 @@ public class Main {
                             System.out.println("(7)CAPACITY");
                             System.out.println("(8)STATUS");
                             int propertyToEdit = sc.nextInt();
-                            Scanner sc1 = new Scanner(System.in);
-                            switch (propertyToEdit) {
-                                case 1:
-                                    System.out.println("Enter new destination: ");
-                                    flightToEdit.setDestination(Airport.valueOf(sc1.nextLine().toUpperCase()));
-                                    continue;
-                                case 2:
-                                    System.out.println("Enter new origin: ");
-                                    flightToEdit.setOrigin(Airport.valueOf(sc1.nextLine().toUpperCase()));
-                                    continue;
-                                case 3:
-                                    System.out.println("Enter new departure date M/d/yyyy: ");
-                                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    flightToEdit.setDepartureDate(LocalDate.parse(sc1.nextLine(), dateFormat));
-                                    continue;
-                                case 4:
-//                            TODO Edit passengers here
-                                case 5:
-                                    System.out.println("Enter new duration min: ");
-                                    flightToEdit.setDuration(sc1.nextInt());
-                                    continue;
-                                case 6:
-                                    System.out.println("Enter new price £ ");
-                                    flightToEdit.setPrice(sc1.nextInt());
-                                    continue;
-                                case 7:
-                                    System.out.println("Enter new capacity ");
-                                    flightToEdit.setCapacity(sc1.nextInt());
-                                    continue;
-                                case 8:
-                                    System.out.println("Enter new status ");
-                                    flightToEdit.setStatus(Status.valueOf(sc1.nextLine().toUpperCase()));
-                                    continue;
+                            FlightService.editFlight(propertyToEdit,flightToEdit);
+                            continue;
+                        case 3:
+//                            Prompt user to select flight to edit
+                            System.out.println("Select flight to cancel: ");
+//                    Initialize optionCount integer. This allows me to generate an option selection number next to each flight
+//                    Option count will increment upwards until it reaches flight list size
+//                    and display next to each flight
+                            optionCount = 0;
+                            for (Flight flightOfList : flightlist.getFlights()) {
+                                System.out.println("(" + optionCount + ")" + flightOfList.toString());
+                                optionCount++;
+                                continue;
                             }
+                            flightToEdit = flightlist.getFlights().get(sc.nextInt());
+                            FlightService.cancelFlight(flightToEdit);
+                            continue;
+                        case 4:
+                            System.out.println("Enter passenger email");
+                            String email = new String();
+                            do {
+                                String possibleEmail = sc.nextLine();
+                                EmailValidator emailValidator = new EmailValidator();
+                                if (emailValidator.validate(possibleEmail) == false) {
+                                    System.out.println("Please enter a valid email");
+                                } else {
+                                    email = possibleEmail;
+                                    break;
+                                }
+                            }while(true);
 
+                            for (Flight flightOfList : flightlist.getFlights()) {
+                                for (Person person : flightOfList.getPassengers()) {
+                                    try {if(email.equals(person.getEmail())) {
+                                        System.out.println(flightOfList.toString());
+                                    }} catch(NullPointerException e) {
+                                        System.out.println("Null Pointer Found");
+                                    }
+                                    break;
+                                }
+                                break;
+                            }
                             continue;
 
                     }
@@ -119,38 +131,53 @@ public class Main {
     //                    Create a new passenger
                             Person passenger = PersonService.createNewPassenger();
     //                    Display all flights
-                            System.out.println("Which flight would you like to book?");
+                            createBooking(flightlist, passenger);
+                            break;
+                        case 2:
+                            System.out.println("On which flight is the booking?");
                             int optionCount = 0;
                             for (Flight flightOfList : flightlist.getFlights()) {
-                                System.out.println("(" + optionCount + ")" + flightOfList.toString());
-                                optionCount++;
-                                continue;
-                            }
-                            Flight flightToEdit;
-                            do {
-                                flightToEdit = flightlist.getFlights().get(sc.nextInt());
-                                if(flightToEdit.getCount() + 1 > flightToEdit.getCapacity()){
-                                    System.out.println("ERROR: Flight at full capacity. Would you like to select a different flight?");
-                                    System.out.println("(1) Select a new flight");
-                                    System.out.println("(2) Terminate booking");
-                                    int continueBooking = sc.nextInt();
-                                    switch (continueBooking){
-                                        case 1:
-                                            continue;
-                                        case 2:
-                                            break;
-                                    }
-
-                                }else{
-                                    flightToEdit.setPassengers(passenger, flightToEdit.getCount());
-                                    flightToEdit.setCount(flightToEdit.getCount() + 1);
-                                    System.out.println("Booking successful");
-                                    break;
+                                if(flightOfList.getStatus() == Status.CANCELLED){
+                                    continue;
+                                }else {
+                                    System.out.println("(" + optionCount + ")" + flightOfList.toString());
+                                    optionCount++;
+                                    continue;
                                 }
-                            }while(true);
+                            }
+                            Flight flightToEdit = flightlist.getFlights().get(sc.nextInt());
+                            System.out.println("Which booking on this flight do you wish to edit/cancel?");
+                            Person[] passengers = flightToEdit.getPassengers();
+                            optionCount = 0;
+                            for(int i = 0; i < flightToEdit.getCount(); i++){
+                                System.out.println("(" + optionCount + ")" + "PASSENGER NAME: " + passengers[i].getName() + " PASSENGER ID: " + passengers[i].getIdNumber());
+                                optionCount++;
+                            }
+                            Person passengerToEdit = passengers[sc.nextInt()];
+                            System.out.println(passengerToEdit.toString());
+                        do {
+                            System.out.println("What details of this passenger would you like to edit?");
+                            System.out.println("(1)NAME");
+                            System.out.println("(2)EMAIL ADDRESS");
+                            System.out.println("(3)PHONE NUMBER");
+                            System.out.println("(4)PASSPORT NUMBER");
+                            editBooking(passengerToEdit);
+                            System.out.println("Would you like to edit other details of this booking?");
+                            System.out.println("(1) Choose another detail to edit");
+                            System.out.println("(2) Conclude editing");
+                            int continueEditing = sc.nextInt();
+                            switch (continueEditing) {
+                                case 1:
+                                    continue;
+                                case 2:
+                                    break;
+                            }
+                            break;
+                        }while(true);
 
 
                     }
+                    continue;
                 default:
                     //     if mainSelection is not 1 or 2 prompt a proper input
                     System.out.println("Please input an integer between 1 and 2: ");

@@ -59,13 +59,12 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", idNumber=" + idNumber +
-                ", passportNumber=" + passportNumber +
-                '}';
+                ", passportNumber=" + passportNumber;
     }
 
     @Override
