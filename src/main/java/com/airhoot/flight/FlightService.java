@@ -186,9 +186,8 @@ public class FlightService {
 
 
 
-    /*public static FlightsList createFlightsList() {
-        List<Flight> flights = new ArrayList<>();
-        FlightsList flightsList = new FlightsList(flights);
+  public static FlightsList createFlightsList() {
+        FlightsList flightsList = new FlightsList();
         final List<Airport> AIRPORTS =
                 List.of(Airport.values());
         final int SIZE = AIRPORTS.size();
@@ -203,14 +202,17 @@ public class FlightService {
                     break;
                 }
             } while (true);
-            LocalDate departuredate = getRandomDate();
+            LocalDate departureDate = getRandomDate();
             int capacity = rand.nextInt(200) + 200;
             Object[] passengers = new Object[capacity];
             int duration = rand.nextInt(600) + 45;
             int price = rand.nextInt(800) + 50;
             int count = 0;
             Status status = Status.ON_TIME;
+            Flight flight = new Flight(destination, origin, departureDate, duration, price, capacity, count, status);
+            flightsList.addFlight(flight);
         }
-    }*/
+        return flightsList;
+    }
 
 }

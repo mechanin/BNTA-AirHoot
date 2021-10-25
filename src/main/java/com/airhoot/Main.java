@@ -1,22 +1,21 @@
 package com.airhoot;
 
 import com.airhoot.flight.*;
-import com.airhoot.person.Person;
 import com.airhoot.person.PersonService;
+import com.airhoot.person.Person;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import static com.airhoot.flight.FlightService.createFlightsList;
 
 public class Main {
     //    ADMIN or BOOKING
     public static void main(String[] args) {
 //    I'm initializing a new flightlist where we will store all the flights
 //    This particular line uses the public flightslist constructor
-        FlightsList flightlist = new FlightsList(new ArrayList<>());
-        flightlist.addFlight(new Flight(Airport.PARIS, Airport.AMSTERDAM, LocalDate.now(), 64, 64, 64, 0, Status.ON_TIME));
-        flightlist.addFlight(new Flight(Airport.LONDON, Airport.LAS_VEGAS, LocalDate.now(), 64, 64, 64, 0, Status.ON_TIME));
-        flightlist.addFlight(new Flight(Airport.ATLANTA, Airport.BEIJING, LocalDate.now(), 64, 64, 64, 0, Status.ON_TIME));
+        FlightsList flightlist = createFlightsList();
         while (true) {
             System.out.println("Function to Access?: ");
             System.out.println("(1)ADMIN");
@@ -66,7 +65,41 @@ public class Main {
                             System.out.println("(7)CAPACITY");
                             System.out.println("(8)STATUS");
                             int propertyToEdit = sc.nextInt();
-                            FlightService.editFlight(propertyToEdit,flightToEdit);
+                            Scanner sc1 = new Scanner(System.in);
+                            switch (propertyToEdit) {
+                                case 1:
+                                    System.out.println("Enter new destination: ");
+                                    flightToEdit.setDestination(Airport.valueOf(sc1.nextLine().toUpperCase()));
+                                    continue;
+                                case 2:
+                                    System.out.println("Enter new origin: ");
+                                    flightToEdit.setOrigin(Airport.valueOf(sc1.nextLine().toUpperCase()));
+                                    continue;
+                                case 3:
+                                    System.out.println("Enter new departure date M/d/yyyy: ");
+                                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    flightToEdit.setDepartureDate(LocalDate.parse(sc1.nextLine(), dateFormat));
+                                    continue;
+                                case 4:
+//                            TODO Edit passengers here
+                                case 5:
+                                    System.out.println("Enter new duration min: ");
+                                    flightToEdit.setDuration(sc1.nextInt());
+                                    continue;
+                                case 6:
+                                    System.out.println("Enter new price £ ");
+                                    flightToEdit.setPrice(sc1.nextInt());
+                                    continue;
+                                case 7:
+                                    System.out.println("Enter new capacity ");
+                                    flightToEdit.setCapacity(sc1.nextInt());
+                                    continue;
+                                case 8:
+                                    System.out.println("Enter new status ");
+                                    flightToEdit.setStatus(Status.valueOf(sc1.nextLine().toUpperCase()));
+                                    continue;
+                            }
+
                             continue;
 
                     }
@@ -86,11 +119,43 @@ public class Main {
     //                    Create a new passenger
                             Person passenger = PersonService.createNewPassenger();
     //                    Display all flights
+                            System.out.println("Which flight would you like to book?");
+                            int optionCount = 0;
+                            for (Flight flightOfList : flightlist.getFlights()) {
+                                System.out.println("(" + optionCount + ")" + flightOfList.toString());
+                                optionCount++;
+                                continue;
+                            }
+                            Flight flightToEdit;
+                            do {
+                                flightToEdit = flightlist.getFlights().get(sc.nextInt());
+                                if(flightToEdit.getCount() + 1 > flightToEdit.getCapacity()){
+                                    System.out.println("ERROR: Flight at full capacity. Would you like to select a different flight?");
+                                    System.out.println("(1) Select a new flight");
+                                    System.out.println("(2) Terminate booking");
+                                    int continueBooking = sc.nextInt();
+                                    switch (continueBooking){
+                                        case 1:
+                                            continue;
+                                        case 2:
+                                            break;
+                                    }
+
+                                }else{
+                                    flightToEdit.setPassengers(passenger, flightToEdit.getCount());
+                                    flightToEdit.setCount(flightToEdit.getCount() + 1);
+                                    System.out.println("Booking successful");
+                                    break;
+                                }
+                            }while(true);
+
+
                     }
                 default:
                     //     if mainSelection is not 1 or 2 prompt a proper input
                     System.out.println("Please input an integer between 1 and 2: ");
             }
+
 
         }
     }
