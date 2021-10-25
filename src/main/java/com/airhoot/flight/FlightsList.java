@@ -1,7 +1,6 @@
-package com.airhoot.Flights;
+package com.airhoot.flight;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FlightsList {
     private ArrayList<Flight> flights;

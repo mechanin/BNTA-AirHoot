@@ -1,9 +1,8 @@
-package com.airhoot.Flights;
+package com.airhoot.flight;
 
 import com.airhoot.person.Person;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime ;
 
 public class Flight {
     private Airport destination;
@@ -37,8 +36,9 @@ public class Flight {
         this.passengers[index] = person;
     }
 
-    public void setDestination(Airport destination) {
+    public boolean setDestination(Airport destination) {
         this.destination = destination;
+        return true;
     }
 
     public void setOrigin(Airport origin) {

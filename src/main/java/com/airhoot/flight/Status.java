@@ -1,4 +1,4 @@
-package com.airhoot.Flights;
+package com.airhoot.flight;
 
 public enum Status {
     ON_TIME,
