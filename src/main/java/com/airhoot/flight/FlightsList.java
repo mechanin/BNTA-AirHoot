@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class FlightsList {
     private ArrayList<Flight> flights;
 
-    public FlightsList(ArrayList<Flight> flights) {
-        this.flights = flights;
+    public FlightsList() {
+        this.flights = new ArrayList<>();
     }
 
 

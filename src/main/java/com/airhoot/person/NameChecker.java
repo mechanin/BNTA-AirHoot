@@ -7,10 +7,10 @@ public class NameChecker {
 
 
     public static final Pattern VALID_NAME_REGEX =
-            Pattern.compile("^[\\w'\\-,.][^0-9_!¡?÷?¿/\\\\+=@#$%ˆ&*(){}|~<>;:[\\]]{2,}$");
+            Pattern.compile("^[A-Z][a-z]+\\s[A-Z][a-z]+$");
 
     public static boolean validate(String name) {
         Matcher matcher = VALID_NAME_REGEX.matcher(name);
-        return matcher.find();
+        return matcher.matches();
     }
 }
